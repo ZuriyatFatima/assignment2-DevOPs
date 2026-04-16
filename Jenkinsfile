@@ -21,14 +21,14 @@ pipeline {
                 echo '==== Building containerized application ===='
                 sh '''
                     echo "Stopping existing containers..."
-                    docker compose -f docker-compose-part2.yml down || true
+                    docker compose -f docker-compose-jenkins.yml down || true
 
                     echo "Creating app directory..."
                     mkdir -p app
                     cp index.php app/
 
                     echo "Starting containers..."
-                    docker compose -f docker-compose-part2.yml up -d
+                    docker compose -f docker-compose-jenkins.yml up -d
                 '''
             }
         }
@@ -42,7 +42,7 @@ pipeline {
 
         stage('Verify') {
             steps {
-                sh 'docker compose -f docker-compose-part2.yml ps'
+                sh 'docker compose -f docker-compose-jenkins.yml ps'
             }
         }
     }
@@ -53,7 +53,7 @@ pipeline {
         }
         failure {
             echo '❌ Pipeline failed. Stopping containers...'
-            sh 'docker compose -f docker-compose-part2.yml down || true'
+            sh 'docker compose -f docker-compose-jenkins.yml down || true'
         }
     }
 }
