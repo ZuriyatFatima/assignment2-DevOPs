@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    image: zuriyat/assignment2:latest
+    container_name: notes_app
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+
+  db:
+    image: mysql:8.0
+    container_name: notes_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: notesdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    volumes:
+      - db_data:/var/lib/mysql    # <-- persistent volume for MySQL data
+
+volumes:
+  db_data:
