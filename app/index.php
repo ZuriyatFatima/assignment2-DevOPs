@@ -64,3 +64,4 @@ $notes = $conn->query("SELECT * FROM notes ORDER BY created_at DESC");
     <?php endwhile; ?>
 </body>
 </html>
+<!-- Trigger v2 -->
