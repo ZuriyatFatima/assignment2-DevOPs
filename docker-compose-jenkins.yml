@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    image: php:8.2-apache
+    container_name: notes_app_ci
+    ports:
+      - "8082:80"            # different port from Part I
+    depends_on:
+      - db_ci
+    volumes:
+      - ./app:/var/www/html  # code volume instead of Dockerfile
+
+  db_ci:
+    image: mysql:8.0
+    container_name: notes_db_ci  # different container name
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: notesdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    volumes:
+      - db_data_ci:/var/lib/mysql
+
+volumes:
+  db_data_ci:
